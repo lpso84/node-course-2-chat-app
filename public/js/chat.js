@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */
+
 var socket = io();
 
 function scrollToBottom() {
@@ -16,8 +17,6 @@ function scrollToBottom() {
     messages.scrollTop(scrollHeight);
   }
 }
-
-
 
 socket.on('connect', function() {
   var params = jQuery.deparam(window.location.search);
@@ -49,6 +48,17 @@ socket.on('disconnect', function() {
 // Socket.on('newEmail', function(email) {
 //   console.log('New email', email);
 // });
+
+socket.on('updateUserList', function(users) {
+  var ol = jQuery('<ol></ol>');
+
+  users.forEach(function(user) {
+    ol.append(jQuery('<li></li>').text(user));
+  });
+
+  jQuery('#users').html(ol);
+})
+
 
 socket.on('newMessage', function(message) {
 
